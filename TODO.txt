@@ -1,0 +1,16 @@
+Criar página estática com lista de filmes,
+* Falta comentários dos torrents
+
+Daemon:
+  * A cada vez que atualiza cria uma página referente a data de atualização
+
+Modelos:
+    IsoHuntOrigin
+
+Página global:
+  Exibe primeiras letras de filmes catalogados
+    Ex: A (Alguma coisa O filme, Alem da Vida, ...), F (Fracassados, Fome animal, ...), ...
+
+  Exibe catálogo de listas, que quando clicado exibe a página estática referente
+
+CSS Geral

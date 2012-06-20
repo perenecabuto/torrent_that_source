@@ -1,0 +1,47 @@
+<h1>{{ current_date.strftime('%d-%b-%Y') }}</h1>
+<h2>Total of movies found {{ movies|count }}</h2>
+
+<ul class="movies">
+
+  {% for movie in movies %}
+  <li class="movie">
+    <img class="movie-image" src="{{ movie.image }}" />
+
+    <p class="movie-name">
+      {{ movie.title }}
+    </p>
+
+    <span class="movie-genre">
+      {{ movie.genre }}
+    </span>
+
+    <p class="movie-genre">
+      {{ movie.synopsis }}
+    </p>
+
+    <ul class="movie-torrents">
+      {% for torrent in movie.torrents %}
+      <li class="torrent">
+        <span class="torrent-name">{{ torrent.name }}</span>
+        <span class="torrent-seeders">{{ torrent.seeders_count }}</span>
+        <span class="torrent-leechers">{{ torrent.leechers_count }}</span>
+
+        <ul class="torrent-links">
+          {% for link in torrent.links %}
+          <li><a href="{{ link }}">Link {{ loop.index }}</a></li>
+          {% endfor %}
+        </ul>
+
+        <ul class="torrent-comments">
+          {% for comment in torrent.comments %}
+          <li class="torrent-comment">{{ comment }}</li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+
+  </li>
+  {% endfor %}
+
+</ul>
