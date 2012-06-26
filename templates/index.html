@@ -4,6 +4,15 @@ body {
     color: #666;
 }
 
+h1, h2 {
+    margin-left: 36px;
+    margin-top: 10px;
+}
+
+h1 a {
+    font-size: 12px;
+}
+
 .movie {
     background-color: #eee;
     width: 50%;
@@ -13,6 +22,8 @@ body {
     padding: 5px;
     min-height: 200px;
     font-size: 14px;
+    border-radius: 5px;
+    box-shadow: 2px 2px #eee;
 }
 
 .movie .movie-name {
@@ -61,7 +72,10 @@ body {
 </style>
 
 
-<h1>{{ current_date.strftime('%d-%b-%Y') }}</h1>
+<h1>{{ current_date.strftime('%d-%b-%Y') }}
+    <a href=".">(Go to the index)</a>
+</h1>
+
 <h2>Total of movies found {{ movies|count }}</h2>
 
 <ul class="movies">
