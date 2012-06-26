@@ -1,43 +1,33 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*
 
-from datetime import date
-from lib import search_movies_on_imdb
+from lib.utils import render_movies_as_html
+from lib import search
 
-urls = {
-    'this_week': "http://www.imdb.com/movies-in-theaters/",
-    'comming_soon': "http://www.imdb.com/movies-coming-soon/",
-}
+urls = (
+    ('this_week', "http://www.imdb.com/movies-in-theaters/"),
+    ('comming_soon', "http://www.imdb.com/movies-coming-soon/"),
+)
 
 movies = []
 
-print "\n* Crawling data...", "\n ", "-" * 100
+# Get data
+print "\n\033[01;32m* Crawling data...\033[00m"
 
-for search_type, url in urls.items():
-    print "- Starting search for %s" % search_type
+for search_type, url in urls:
+    print "\033[01;34m* Starting search for %s\033[00m" % search_type
 
     try:
-        movies += search_movies_on_imdb(url)
+        movies += search.for_movies(search.PirateBaySearch, url)
     except Exception as e:
         print "! Fail to get content %s (%s)" % (e.message, type(e).__name__)
 
-
-print "\n * Generating pages...", "\n ", "-" * 100
-
-from jinja2 import Environment, FileSystemLoader
-env = Environment(loader=FileSystemLoader('templates'))
-template = env.get_template('index.html')
-
-current_date = date.today()
-static_filename = (current_date.strftime('%Y%m%d'), 'index.html')
-index = open('static/%s-%s' % static_filename, 'w')
-
-index.write(
-    template.render(
-      movies=movies,
-      current_date=current_date,
-    )
-)
-
-index.close()
 print ""
+
+
+# Render html
+print "\n\033[01;32m* Generating pages...\033[00m"
+
+render_movies_as_html(movies)
+
+print "\033[01;34m* Done...\033[00m"

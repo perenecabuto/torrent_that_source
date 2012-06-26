@@ -4,6 +4,7 @@
 *.swp
 media/*/*
 log/*
+static/*
 
 # Packages
 *.egg
