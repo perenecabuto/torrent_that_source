@@ -30,6 +30,25 @@ class Movie(object):
         self.image = image
         self.torrents = torrents
 
+    def search_terms(self):
+        return self.title
+
+
+class Audio(object):
+    title = ''
+    artist = ''
+    label = ''
+    torrents = []
+
+    def __init__(self, title, artist='', label='', torrents=[]):
+        self.title = title.encode('utf-8')
+        self.artist = artist.encode('utf-8')
+        self.label = label.encode('utf-8')
+        self.torrents = torrents
+
+    def search_terms(self):
+        return '%s - %s' % (self.title, self.artist)
+
 
 class TorrentSearch(object):
 

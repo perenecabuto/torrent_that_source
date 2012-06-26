@@ -1,0 +1,29 @@
+---
+source: this_week
+url: http://www.imdb.com/movies-in-theaters/
+search: ImbdSearch
+items_selector: '[itemtype="http://schema.org/Movie"]'
+name_item: '[itemprop="name"]'
+genre_item: '[itemprop="genre"]'
+image_item: '[itemprop="image"]'
+synopsis_item: '[itemprop="description"]'
+type: video
+---
+source: comming_soon
+url: http://www.imdb.com/movies-coming-soon/
+search: ImbdSearch
+items_selector: '[itemtype="http://schema.org/Movie"]'
+name_item: '[itemprop="name"]'
+genre_item: '[itemprop="genre"]'
+image_item: '[itemprop="image"]'
+synopsis_item: '[itemprop="description"]'
+type: video
+# ---
+# source: top_100_brazilian_musics
+# url: http://www.hot100brasil.com/chtsinglesb.html
+# search: Hot100BrasilSearch
+# items_selector: 'tr[height=19]'
+# name_item: 'td'
+# artist_item: 'td'
+# label_item: 'td'
+# type: audio
