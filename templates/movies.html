@@ -1,4 +1,103 @@
-<h1>{{ current_date.strftime('%d-%b-%Y') }}</h1>
+<style type="text/css" media="screen">
+body {
+    font-family: Helvetica;
+    color: #666;
+}
+
+h1, h2 {
+    margin-left: 36px;
+    margin-top: 10px;
+}
+
+h2 {
+    position: fixed;
+    left: 10px;
+    top: 0px;
+}
+
+h1 {
+    position: fixed;
+    left: 10px;
+    top: 30px;
+}
+
+h1 a {
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.movie {
+    background-color: #eee;
+    width: 50%;
+    display: block;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    min-height: 200px;
+    font-size: 14px;
+    border-radius: 5px;
+    box-shadow: 2px 2px #eee;
+}
+
+.movie .movie-name {
+    margin: 0;
+    font-weight: bold;
+}
+
+.movie .movie-genre {
+    font-style: italic;
+}
+
+.movie .movie-image {
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    height: 200px;
+}
+
+.movie .movie-torrents {
+    clear: both;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ccc;
+    max-height: 150px;
+    overflow: auto;
+}
+
+.movie .torrent {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.movie .torrent .torrent-seeders {
+    color: green;
+}
+
+.movie .torrent .torrent-leechers {
+    color: red;
+}
+
+.movie .torrent .torrent-links {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.movie .torrent .torrent-links > * {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    margin-top: 3px
+}
+</style>
+
+
+<h1>{{ current_date.strftime('%d-%b-%Y') }}
+    <a href=".">(Go to the index)</a>
+</h1>
+
 <h2>Total of movies found {{ movies|count }}</h2>
 
 <ul class="movies">
@@ -15,7 +114,7 @@
       {{ movie.genre }}
     </span>
 
-    <p class="movie-genre">
+    <p class="movie-synopsis">
       {{ movie.synopsis }}
     </p>
 
