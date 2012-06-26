@@ -5,8 +5,8 @@ from lib.utils import render_movies_as_html
 from lib import search
 
 urls = (
-    ('this_week', "http://www.imdb.com/movies-in-theaters/"),
     ('comming_soon', "http://www.imdb.com/movies-coming-soon/"),
+    ('this_week', "http://www.imdb.com/movies-in-theaters/"),
 )
 
 movies = []
