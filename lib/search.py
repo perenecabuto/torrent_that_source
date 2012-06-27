@@ -3,8 +3,8 @@
 from bs4 import BeautifulSoup
 from urllib2 import urlopen
 from urllib import quote_plus
-from model import Torrent, Movie, Audio
-from model import TorrentSearch, MovieSearch
+from model import Torrent, Video, Audio
+from model import TorrentSearch, ResourceSearch
 import re
 
 
@@ -12,82 +12,102 @@ def get_url_nodes(url):
     return BeautifulSoup(urlopen(url).read())
 
 
-def for_musics(torrent_search_class, source):
-    musics = Hot100BrasilSearch(source).items()
+def for_resources(torrent_search_class, source):
+    resource_search_class = None
 
-    for music in musics:
-        music.torrents = torrent_search_class(
-            music.search_terms(),
-            source['type']
-        ).torrents()
-    return musics
+    if source['type'] == 'video':
+        resource_search_class = VideoSearch
+    elif source['type'] == 'audio':
+        resource_search_class = AudioSearch
 
+    resources = resource_search_class(source).items()
 
-def for_movies(torrent_search_class, source):
-    movies = ImbdSearch(source).items()
+    for r in resources:
+        r.torrents = torrent_search_class(r.search_terms(), source['type']).torrents()
 
-    for movie in movies:
-        movie.torrents = torrent_search_class(
-            movie.search_terms(),
-            source['type']
-        ).torrents()
-    return movies
+    return resources
 
 
-class ImbdSearch(MovieSearch):
-
-    def __init__(self, source):
-        self.url = source['url']
-        self.items_selector = source['items_selector']
-        self.name_item = source['name_item']
-        self.genre_item = source['genre_item']
-        self.image_item = source['image_item']
-        self.synopsis_item = source['synopsis_item']
-
-    def items(self):
+def get_resource_nodes(url, selector, callback):
         items = []
-        doc = get_url_nodes(self.url)
-        list = doc.select(self.items_selector)
+        doc = get_url_nodes(url)
 
-        for item in list:
+        for node in doc.select(selector.text):
             try:
-                items.append(Movie(
-                    title=item.select(self.name_item)[0].text,
-                    image=item.select(self.image_item)[0].get('src'),
-                    synopsis=item.select(self.synopsis_item)[0].text,
-                    genre=", ".join([g.text for g in item.select(self.genre_item) or []]),
-                ))
+                items.append(callback(node))
             except:
                 next
 
         return items
 
 
-class Hot100BrasilSearch(MovieSearch):
+def subnode_by_selector(node, selector):
+    return node.select(selector.text)[selector.pos]
+
+
+def subnodes_by_selector(node, selector):
+    return node.select(selector.text)
+
+
+class Selector(object):
+    text = ''
+    pos = 0
+
+    def __init__(self, str_or_list_or_dict):
+        if type(str_or_list_or_dict) is list:
+            self.text = str_or_list_or_dict[0]
+            self.pos = str_or_list_or_dict[1]
+
+        if type(str_or_list_or_dict) is dict:
+            self.text = str_or_list_or_dict.get('selector', self.text)
+            self.pos = str_or_list_or_dict.get('position', self.pos)
+
+        if type(str_or_list_or_dict) is str:
+            self.text = str_or_list_or_dict
+
+
+class VideoSearch(ResourceSearch):
 
     def __init__(self, source):
         self.url = source['url']
-        self.items_selector = source['items_selector']
-        self.name_item = source['name_item']
-        self.artist_item = source['artist_item']
-        self.label_item = source['label_item']
+        self.items_selector = Selector(source['items_selector'])
+        self.title_selector = Selector(source['title_selector'])
+        self.genre_selector = Selector(source['genre_selector'])
+        self.image_selector = Selector(source['image_selector'])
+        self.synopsis_selector = Selector(source['synopsis_selector'])
 
     def items(self):
-        items = []
-        doc = get_url_nodes(self.url)
-        list = doc.select(self.items_selector)
+        return get_resource_nodes(
+            self.url,
+            self.items_selector,
+            lambda node: Video(
+                title=subnode_by_selector(node, self.title_selector).text,
+                image=subnode_by_selector(node, self.image_selector).get('src'),
+                synopsis=subnode_by_selector(node, self.synopsis_selector).text,
+                genre=", ".join([g.text for g in subnodes_by_selector(node, self.genre_selector) or []]),
+            )
+        )
 
-        for item in list:
-            try:
-                items.append(Audio(
-                    title=item.select(self.name_item)[4].text.strip(),
-                    artist=item.select(self.artist_item)[5].text.strip(),
-                    label=item.select(self.label_item)[6].text.strip()
-                ))
-            except:
-                next
 
-        return items
+class AudioSearch(ResourceSearch):
+
+    def __init__(self, source):
+        self.url = source['url']
+        self.items_selector = Selector(source['items_selector'])
+        self.name_selector = Selector(source['name_selector'])
+        self.artist_selector = Selector(source['artist_selector'])
+        self.label_selector = Selector(source['label_selector'])
+
+    def items(self):
+        return get_resource_nodes(
+            self.url,
+            self.items_selector,
+            lambda node: Audio(
+                title=subnode_by_selector(node, self.name_selector).text.strip(),
+                artist=subnode_by_selector(node, self.artist_selector).text.strip(),
+                label=subnode_by_selector(node, self.label_selector).text.strip()
+            )
+        )
 
 
 class PirateBaySearch(TorrentSearch):

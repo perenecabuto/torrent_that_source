@@ -2,40 +2,34 @@
 # -*- coding: utf-8 -*
 
 import yaml
-from lib.utils import render_movies_as_html, render_musics_as_html
+from lib import utils
 from lib import search
+from datetime import date
 
 sources = open("sources.yml", 'r')
 content = sources.read()
 sources.close()
 
-movies = []
-musics = []
 
-# Get data
-print "\n\033[01;32m* Crawling data...\033[00m"
-
-for source in yaml.load_all(content):
-    print "\033[01;34m* Starting search for %s\033[00m" % source['source']
-
+for conf in yaml.load_all(content):
     try:
-        if source['type'] == 'video':
-            movies += search.for_movies(search.PirateBaySearch, source)
-        elif source['type'] == 'audio':
-            musics += search.for_musics(search.PirateBaySearch, source)
+        print "\033[01;32m* Crawling data from %s\033[00m" % conf['source']
+        resources = search.for_resources(search.PirateBaySearch, conf)
+
+        # Render html
+        print "\033[01;34m* Generating pages...\033[00m"
+        page_content = utils.render_resources_as_html(resources, conf['type'])
+
+        output_path = 'static/%(source)s-%(type)s-%(date)s.html' % {
+            'source': conf['source'],
+            'type': conf['type'],
+            'date': date.today().strftime('%Y%m%d'),
+        }
+
+        index = open(output_path, 'w')
+        index.write(page_content)
+        index.close()
+        print "\033[01;34m* Done...\033[00m\n"
+
     except Exception as e:
         print "! Fail to get content %s (%s)" % (e.message, type(e).__name__)
-
-print ""
-
-
-# Render html
-print "\n\033[01;32m* Generating pages...\033[00m"
-
-if movies:
-    render_movies_as_html(movies)
-
-if musics:
-    render_musics_as_html(musics)
-
-print "\033[01;34m* Done...\033[00m"

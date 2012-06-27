@@ -16,7 +16,7 @@ class Torrent(object):
         self.comments = comments
 
 
-class Movie(object):
+class Video(object):
     title = ''
     synopsis = ''
     genre = ''
@@ -73,7 +73,7 @@ class TorrentSearch(object):
         raise NotImplemented("results")
 
 
-class MovieSearch(object):
+class ResourceSearch(object):
 
     def __init__(self, url):
         """
@@ -81,9 +81,9 @@ class MovieSearch(object):
         """
         raise NotImplemented("__init__")
 
-    def movies(self):
+    def items(self):
         """
-        It must returns a list of Movie objects as the result
+        It must returns a list of Video objects as the result
         of the data gotten from the resource
         """
         raise NotImplemented("results")
