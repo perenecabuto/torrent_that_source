@@ -1,0 +1,45 @@
+<h1>{{ current_date.strftime('%d-%b-%Y') }}</h1>
+<h2>Total of musics found {{ musics|count }}</h2>
+
+<ul class="musics">
+
+  {% for music in musics %}
+  <li class="music">
+    <p class="music-name">
+      {{ music.title }}
+    </p>
+
+    <span class="music-artist">
+      {{ music.artist }}
+    </span>
+
+    <p class="music-label">
+      {{ music.label }}
+    </p>
+
+    <ul class="music-torrents">
+      {% for torrent in music.torrents %}
+      <li class="torrent">
+        <span class="torrent-name">{{ torrent.name }}</span>
+        <span class="torrent-seeders">{{ torrent.seeders_count }}</span>
+        <span class="torrent-leechers">{{ torrent.leechers_count }}</span>
+
+        <ul class="torrent-links">
+          {% for link in torrent.links %}
+          <li><a href="{{ link }}">Link {{ loop.index }}</a></li>
+          {% endfor %}
+        </ul>
+
+        <ul class="torrent-comments">
+          {% for comment in torrent.comments %}
+          <li class="torrent-comment">{{ comment }}</li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+
+  </li>
+  {% endfor %}
+
+</ul>
