@@ -41,13 +41,14 @@ class Audio(object):
     torrents = []
 
     def __init__(self, title, artist='', label='', torrents=[]):
-        self.title = title.encode('utf-8')
-        self.artist = artist.encode('utf-8')
-        self.label = label.encode('utf-8')
+        self.title = title
+        self.artist = artist
+        self.label = label
         self.torrents = torrents
 
     def search_terms(self):
-        return '%s - %s' % (self.title, self.artist)
+        #return '%s - %s' % (self.title.encode('windows-1252'), self.artist.encode('windows-1252'))
+        return '%s' % (self.title.encode('windows-1252'))
 
 
 class TorrentSearch(object):

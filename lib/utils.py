@@ -25,5 +25,6 @@ def render_musics_as_html(musics):
     static_filename = (current_date.strftime('%Y%m%d'), 'musics-index.html')
     index = open('static/%s-%s' % static_filename, 'w')
 
-    index.write(template.render(musics=musics, current_date=current_date))
+    html = template.render(musics=musics, current_date=current_date).encode('windows-1252', 'ignore')
+    index.write(html)
     index.close()

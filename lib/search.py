@@ -9,7 +9,16 @@ import re
 
 
 def get_url_nodes(url):
-    return BeautifulSoup(urlopen(url).read())
+    # if url == "http://www.hot100brasil.com/chtsinglesb.html":
+    #     try:
+    #         f = file('fixture.html', 'r')
+    #         return BeautifulSoup(f.read())
+    #     except Exception, e:
+    #         raise e
+    #     finally:
+    #         f.close()
+    # else:
+        return BeautifulSoup(urlopen(url).read())
 
 
 def for_musics(torrent_search_class, source):
@@ -97,7 +106,7 @@ class PirateBaySearch(TorrentSearch):
     }
 
     def __init__(self, pattern, type_):
-        pattern = quote_plus(re.sub('[{}()\[\]\-]', '', pattern))
+        pattern = quote_plus(re.sub('[{}()\[\]]', '', pattern))
         self.url = u'http://thepiratebay.se/search/%(pattern)s/0/99/%(type)s' % {
             "pattern": pattern,
             "type": self.SEARCH_TYPES[type_]

@@ -18,12 +18,12 @@ genre_item: '[itemprop="genre"]'
 image_item: '[itemprop="image"]'
 synopsis_item: '[itemprop="description"]'
 type: video
-# ---
-# source: top_100_brazilian_musics
-# url: http://www.hot100brasil.com/chtsinglesb.html
-# search: Hot100BrasilSearch
-# items_selector: 'tr[height=19]'
-# name_item: 'td'
-# artist_item: 'td'
-# label_item: 'td'
-# type: audio
+---
+source: top_100_brazilian_musics
+url: http://www.hot100brasil.com/chtsinglesb.html
+search: Hot100BrasilSearch
+items_selector: 'tr[height=19]'
+name_item: 'td'
+artist_item: 'td'
+label_item: 'td'
+type: audio
