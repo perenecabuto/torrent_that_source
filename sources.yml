@@ -24,11 +24,11 @@ type: audio
 url: http://www.hot100brasil.com/chtsinglesb.html
 items_selector: 'tr[height=19]'
 name_selector:
-   - selector: 'td'
-   - position: 4
+   selector: 'td'
+   position: 4
 artist_selector:
-   - selector: 'td'
-   - position: 5
+   selector: 'td'
+   position: 5
 label_selector:
-   - selector: 'td'
-   - position: 6
+   selector: 'td'
+   position: 6

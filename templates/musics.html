@@ -1,3 +1,107 @@
+<style type="text/css" media="screen">
+body {
+    font-family: Helvetica;
+    color: #666;
+}
+
+h1, h2 {
+    margin-left: 36px;
+    margin-top: 10px;
+    z-index: -1;
+    font-size: 23px;
+}
+
+h2 {
+    position: fixed;
+    left: 10px;
+    top: 0px;
+}
+
+h1 {
+    position: fixed;
+    left: 10px;
+    top: 30px;
+}
+
+h1 a {
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+ul, li {
+    list-style: none;
+}
+
+.music {
+    background-color: #eee;
+    width: 50%;
+    display: block;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    min-height: 200px;
+    font-size: 14px;
+    border-radius: 5px;
+    box-shadow: 2px 2px #eee;
+}
+
+.music .music-name {
+    margin: 0;
+    font-weight: bold;
+}
+
+.music .music-genre {
+    font-style: italic;
+}
+
+.music .music-image {
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    height: 200px;
+    border: 5px solid #fff;
+    box-shadow: 2px 2px #ddd;
+}
+
+.music .music-torrents {
+    clear: both;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ccc;
+    max-height: 150px;
+    overflow: auto;
+}
+
+.music .torrent {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.music .torrent .torrent-seeders {
+    color: green;
+}
+
+.music .torrent .torrent-leechers {
+    color: red;
+}
+
+.music .torrent .torrent-links {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.music .torrent .torrent-links > * {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    margin-top: 3px
+}
+</style>
+
+
 <h1>{{ current_date.strftime('%d-%b-%Y') }}</h1>
 <h2>Total of musics found {{ musics|count }}</h2>
 

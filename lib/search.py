@@ -125,7 +125,7 @@ class PirateBaySearch(TorrentSearch):
 
     def torrents(self):
         doc = get_url_nodes(self.url)
-        nodes = doc.select("#searchResult > tbody > tr")
+        nodes = doc.select("#searchResult > tr")[1:]
         torrents = []
 
         for torrent in nodes:
