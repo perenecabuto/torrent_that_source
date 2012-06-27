@@ -36,4 +36,4 @@ def render_template_as_html(template, context):
     templates_dir = path.realpath(path.join(path.dirname(__file__), '..', 'templates'))
     env = Environment(loader=FileSystemLoader(templates_dir))
     template = env.get_template(template)
-    return template.render(**context)
+    return template.render(**context).encode('windows-1252', 'ignore')

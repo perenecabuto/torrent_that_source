@@ -29,16 +29,16 @@ def for_resources(torrent_search_class, source):
 
 
 def get_resource_nodes(url, selector, callback):
-        items = []
-        doc = get_url_nodes(url)
+    items = []
+    doc = get_url_nodes(url)
 
-        for node in doc.select(selector.text):
-            try:
-                items.append(callback(node))
-            except:
-                next
+    for node in doc.select(selector.text):
+        try:
+            items.append(callback(node))
+        except:
+            next
 
-        return items
+    return items
 
 
 def subnode_by_selector(node, selector):
@@ -117,7 +117,7 @@ class PirateBaySearch(TorrentSearch):
     }
 
     def __init__(self, pattern, type_):
-        pattern = quote_plus(re.sub('[{}()\[\]\-]', '', pattern))
+        pattern = quote_plus(re.sub('[{}()\[\]]', '', pattern))
         self.url = u'http://thepiratebay.se/search/%(pattern)s/0/99/%(type)s' % {
             "pattern": pattern,
             "type": self.SEARCH_TYPES[type_]
