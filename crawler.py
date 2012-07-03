@@ -10,8 +10,7 @@ sources = open("sources.yml", 'r')
 content = sources.read()
 sources.close()
 
-
-for conf in yaml.load_all(content):
+for conf in yaml.load(content)['sources']:
     try:
         print "\033[01;32m* Crawling data for %s\033[00m" % conf['source']
         resources = search.for_resources(search.PirateBaySearch, conf)

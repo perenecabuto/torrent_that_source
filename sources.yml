@@ -1,34 +1,44 @@
----
-source: this_week
-type: video
-url: http://www.imdb.com/movies-in-theaters/
-items_selector: '[itemtype="http://schema.org/Movie"]'
-title_selector: '[itemprop="name"]'
-genre_selector: '[itemprop="genre"]'
-image_selector: '[itemprop="image"]'
-synopsis_selector: '[itemprop="description"]'
----
-source: comming_soon
-type: video
-url: http://www.imdb.com/movies-coming-soon/
-items_selector:
-    - '[itemtype="http://schema.org/Movie"]'
-    - 0
-title_selector: '[itemprop="name"]'
-genre_selector: '[itemprop="genre"]'
-image_selector: '[itemprop="image"]'
-synopsis_selector: '[itemprop="description"]'
----
-source: top_100_brazilian_musics
-type: audio
-url: http://www.hot100brasil.com/chtsinglesb.html
-items_selector: 'tr[height=19]'
-name_selector:
-   selector: 'td'
-   position: 4
-artist_selector:
-   selector: 'td'
-   position: 5
-label_selector:
-   selector: 'td'
-   position: 6
+aliases:
+  - &imbd_selectors
+    items_selector: '[itemtype="http://schema.org/Movie"]'
+    title_selector: '[itemprop="name"]'
+    genre_selector: '[itemprop="genre"]'
+    image_selector: '[itemprop="image"]'
+    synopsis_selector: '[itemprop="description"]'
+
+  - &imdb_list_selectors
+    items_selector: '.list.detail .list_item'
+    title_selector: '.info b'
+    genre_selector: '#NO_GENRE'
+    image_selector: '.image img'
+    synopsis_selector: '.item_description'
+
+sources:
+  - source: this_week
+    type: video
+    url: http://www.imdb.com/movies-in-theaters/
+    <<: *imbd_selectors
+
+  - source: comming_soon
+    type: video
+    url: http://www.imdb.com/movies-coming-soon/
+    <<: *imbd_selectors
+
+  - source: harry_potter_collection
+    type: video
+    url: http://www.imdb.com/list/XZ_crv3u-MM/
+    <<: *imdb_list_selectors
+
+  - source: top_100_brazilian_musics
+    type: audio
+    url: http://www.hot100brasil.com/chtsinglesb.html
+    items_selector: 'tr[height=19]'
+    name_selector:
+       selector: 'td'
+       position: 4
+    artist_selector:
+       selector: 'td'
+       position: 5
+    label_selector:
+       selector: 'td'
+       position: 6

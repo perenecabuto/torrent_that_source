@@ -118,7 +118,7 @@ class PirateBaySearch(TorrentSearch):
 
     def __init__(self, pattern, type_):
         pattern = quote_plus(re.sub('[{}()\[\]]', '', pattern))
-        self.url = u'http://thepiratebay.se/search/%(pattern)s/0/99/%(type)s' % {
+        self.url = u'http://thepiratebay.se/search/%(pattern)s/0/7/%(type)s' % {
             "pattern": pattern,
             "type": self.SEARCH_TYPES[type_]
         }
