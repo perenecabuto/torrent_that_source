@@ -14,6 +14,16 @@ aliases:
     synopsis_selector: '.item_description'
 
 sources:
+  - source: horror_movies
+    type: video
+    url: http://www.imdb.com/list/0Z3lzLBAD6c/
+    <<: *imdb_list_selectors
+
+  - source: harry_potter_collection
+    type: video
+    url: http://www.imdb.com/list/XZ_crv3u-MM/
+    <<: *imdb_list_selectors
+
   - source: this_week
     type: video
     url: http://www.imdb.com/movies-in-theaters/
@@ -23,11 +33,6 @@ sources:
     type: video
     url: http://www.imdb.com/movies-coming-soon/
     <<: *imbd_selectors
-
-  - source: harry_potter_collection
-    type: video
-    url: http://www.imdb.com/list/XZ_crv3u-MM/
-    <<: *imdb_list_selectors
 
   - source: top_100_brazilian_musics
     type: audio
